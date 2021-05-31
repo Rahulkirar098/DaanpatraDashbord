@@ -51,7 +51,7 @@ export function Login() {
 
     let data = { username, password }
 
-    const fetchapi = await fetch(api+"/user-login/", {
+    const fetchapi = await fetch(api+"user-login/", {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

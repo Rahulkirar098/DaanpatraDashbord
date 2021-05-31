@@ -40,15 +40,13 @@ export const Contact = () => {
 
 
     const columns = [
-        { name: "SL",    },
+        { name: "SL",  },
         { name: "Fristname", lable: "Frisaatname" },
         { name: "Lastname", lable: "Lastname" },
         { name: "Contact", lable: "Contact" },
         { name: "Email", lable: "Email" },
         { name: "Message", lable: "Message" },
     ];
-
-
     const options = {
         filterType: 'checkbox',
         selectableRowsHideCheckboxes : true,

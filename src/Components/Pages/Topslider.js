@@ -56,7 +56,7 @@ export function Topslider() {
 
 
 
-    useEffect(async (index) => {
+    useEffect(async () => {
 
         const fetchapi = await fetch(api + "/topslider")
 
@@ -66,7 +66,9 @@ export function Topslider() {
 
         setGetdata(response);
 
-    }, [1])
+    }, [images])
+
+
 
 
     const handelPut = async (id) => {
@@ -80,10 +82,14 @@ export function Topslider() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             data: formData
-        }).then((response) => { console.log(response) })
-
-        setTimeout(() => {window.location.reload(false)}, 1000)
-
+        }).then((response) => {
+            console.log(response)
+            if (response) {
+                window.location.reload();
+            } else {
+                alert("something Went wrong")
+            }
+        })
     }
 
 
@@ -98,18 +104,29 @@ export function Topslider() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             data: formData
-        }).then((response) => { console.log(response) })
+        }).then((response) => {
+            console.log(response)
+            if (response) {
+                window.location.reload();
+            } else {
+                alert("something Went wrong")
+            }
+        })
 
-        setTimeout(() => {window.location.reload(false)}, 1000)
 
     }
 
-    const handeldelete = async (id) => {
+    const handeldelete = (id) => {
 
-        const fetchapi = await fetch(`${api}topslider/${id}`, { method: 'DELETE' });
+        fetch(`${api}topslider/${id}`, { method: 'DELETE' }).then((response) => {
+            console.log(response)
+            if (response) {
+                window.location.reload();
+            } else {
+                alert("something Went wrong")
+            }
+        })
 
-        setTimeout(() => {window.location.reload(false)}, 1000)
-    
     }
 
     return (

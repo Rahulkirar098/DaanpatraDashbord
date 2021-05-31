@@ -3,21 +3,26 @@ import MUIDataTable from "mui-datatables";
 import EditAttributesOutlinedIcon from '@material-ui/icons/EditAttributesOutlined';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 import { api } from "../Api";
+import axios from "axios";
+
 
 
 
 export const DonationDetails = () => {
 
-  const api = `https://api.daanpatra.in/donation/`;
+  // const api = `https://api.daanpatra.in/donation/`;
 
   const [getdata, setGetdata] = useState([])
-  
-  const token = localStorage.getItem("token")
-  
 
-  
+  const [Accepted, setAccepted] = useState(false)
+
+
+  const token = localStorage.getItem("token")
+
+
+
   useEffect(async (index) => {
-    const fetchapi = await fetch(api, {
+    const fetchapi = await fetch(api+'/donation', {
       headers: {
         'Authorization': token,
       }
@@ -25,7 +30,7 @@ export const DonationDetails = () => {
     const response = await fetchapi.json();
 
     let temp = [];
-    
+
     if (response.length) {
 
       response.map((item, index) => {
@@ -61,6 +66,27 @@ export const DonationDetails = () => {
 
   }, [1])
 
+
+  const handlestatus = (id) => {
+
+    fetch(api+'status/'+id.rowData.[0]+"/", {
+      method: 'PATCH',
+      headers: {
+        'Authorization': token,
+      }
+    }).then(response =>
+      {
+      if (response) {
+        window.location.reload();
+    } else {
+        alert("something Went wrong")
+    }
+      console.log(response)})
+
+
+    // console.log(id.rowData.[0])
+    
+  }
 
   const columns = [
     { name: "id", label: "S.No" },
@@ -105,18 +131,15 @@ export const DonationDetails = () => {
       options: {
         customBodyRender: (items, id) => {
 
-          if (items ) {
-            return <EditAttributesIcon style={{color:"green",fontSize:"50px"}}/>
+          if (items) {
+            return <EditAttributesIcon style={{ color: "green", fontSize: "50px" }} onClick={() => {alert("You Allready Accepted")}} />
           } else {
-            return <EditAttributesOutlinedIcon style={{color:"red",fontSize:"50px"}}/>
+            return <EditAttributesOutlinedIcon style={{ color: "red", fontSize: "50px" }} onClick={() => handlestatus(id)} />
           }
         }
       }
     },
-   
-
   ];
-
 
   const options = {
     filterType: 'checkbox',
